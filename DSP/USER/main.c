@@ -19,15 +19,12 @@
  update 2020.4.3
 ************************************************/
 
-
-#define FFT_LENGTH		1024 		//FFT长度，默认是1024点FFT
-
+#if 1
+#define FFT_LENGTH		1024 		//FFT长度，默认是1024点FFT 
 float fft_inputbuf[FFT_LENGTH];	//FFT输入数组
 float fft_outputbuf[FFT_LENGTH];	//FFT输出数组
 float fft_outputpower[FFT_LENGTH];
 float fft_outputA[FFT_LENGTH];
-u8 timeout;
-
 fft_choice instance;
 void fft_init(fft_choice *S)
 {
@@ -38,6 +35,7 @@ void fft_init(fft_choice *S)
 	//窗函数选择
 	//int data_size;//填0,具体算法还没弄懂
 	S->winname=hanning;//窗函数名字
+	S->load_r = 50;// 负载电阻为50欧姆
 	//输出数据
 	S->unit=dBmhz; //输出数据的单位
 	S->altitude=fft_outputA;
@@ -47,8 +45,12 @@ void fft_init(fft_choice *S)
 	//如果要看幅度和功率的话找两个数组来承接
 	//S->power,S->altitude 指针
 }
+#endif
 
-
+#if 1
+u8 timeout;						   //运行时间计数标志					
+u8 buf[50];                        //运行时间
+#endif
 	
 int main(void)
 {

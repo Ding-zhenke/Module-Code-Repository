@@ -1,7 +1,7 @@
 /*
 design by Dcount
-2020.3.17
-update 2020.3.28
+designed date"2020.3.17
+update:2020.7.15
 */
 #include "fft.h"
 
@@ -101,14 +101,14 @@ void cfft(fft_choice *S,float *data,float *out)
 	int i,FFT_LEN;//FFT_LEN不一定是采样点数，采样点数是ADC点数
 	arm_cfft_radix4_instance_f32 scfft;
 	FFT_LEN = S->size;
-	S->Fullscale=10*log10(S->ADC_Vpp*S->ADC_Vpp/8/50*1000);//rms在负载50欧姆的情况下
+	S->Fullscale=10*log10(S->ADC_Vpp*S->ADC_Vpp/8/S->load_r*1000);//rms在负载50欧姆的情况下
 	S->BW*=1.57f;//一阶RC
 	S->df=S->Fs/S->size;//分辨率等于Fs/n
 	//correction = 10*log10(S->Fs/S->size*S->ENBW)
 	win(data,S);
 	for(i=0;i<FFT_LEN;i++)
 	{
-		a[2*i]= data[i]/pow(2,S->ADC_bit-1);//如果你已经对ADC数据归一化了，那么就不用除了
+		a[2*i]= data[i]/pow(2,S->ADC_bit-1);
 		a[2*i+1] = 0;
 	}
 

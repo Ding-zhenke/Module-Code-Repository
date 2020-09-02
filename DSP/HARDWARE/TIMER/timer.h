@@ -16,5 +16,12 @@
 extern TIM_HandleTypeDef TIM3_Handler;      //定时器3PWM句柄 
 
 void TIM3_Init(u16 arr,u16 psc);
+extern TIM_HandleTypeDef TIM7_Handler;      //定时器4PWM句柄 
+
+void TIM7_Init(u16 arr,u16 psc);
+
+void timer_init(u8 *timeout);
+void timer(u8 timeout,u8 *buff);
+
 #endif
 

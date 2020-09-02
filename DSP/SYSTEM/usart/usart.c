@@ -43,6 +43,12 @@ int fputc(int ch, FILE *f)
 }
 #endif 
 
+UART_HandleTypeDef UART1_Handler; //UART1句柄
+UART_HandleTypeDef USART2_Handler;  //USART2句柄
+
+
+
+
 #if EN_USART1_RX   //如果使能了接收
 //串口1中断服务程序
 //注意,读取USARTx->SR能避免莫名其妙的错误   	
@@ -52,9 +58,8 @@ u8 USART_RX_BUF[USART_REC_LEN];     //接收缓冲,最大USART_REC_LEN个字节.
 //bit14，	接收到0x0d
 //bit13~0，	接收到的有效字节数目
 u16 USART_RX_STA=0;       //接收状态标记	
-
 u8 aRxBuffer[RXBUFFERSIZE];//HAL库使用的串口接收缓冲
-UART_HandleTypeDef UART1_Handler; //UART句柄
+
 
 //初始化IO 串口1 
 //bound:波特率
@@ -77,7 +82,6 @@ void uart_init(u32 bound)
 //UART底层初始化，时钟使能，引脚配置，中断配置
 //此函数会被HAL_UART_Init()调用
 //huart:串口句柄
-
 void HAL_UART_MspInit(UART_HandleTypeDef *huart)
 {
     //GPIO端口设置
@@ -103,6 +107,21 @@ void HAL_UART_MspInit(UART_HandleTypeDef *huart)
 		HAL_NVIC_EnableIRQ(USART1_IRQn);				//使能USART1中断通道
 		HAL_NVIC_SetPriority(USART1_IRQn,3,3);			//抢占优先级3，子优先级3
 #endif	
+	}
+	if(huart->Instance==USART2)
+	{
+		GPIO_InitTypeDef GPIO_Initure;
+		__HAL_RCC_GPIOA_CLK_ENABLE();			//使能GPIOA时钟
+		__HAL_RCC_USART2_CLK_ENABLE();			//使能USART2时钟
+		GPIO_Initure.Pin=GPIO_PIN_2|GPIO_PIN_3; //PA2,3
+		GPIO_Initure.Mode=GPIO_MODE_AF_PP;		//复用推挽输出
+		GPIO_Initure.Pull=GPIO_PULLUP;			//上拉
+		GPIO_Initure.Speed=GPIO_SPEED_FREQ_VERY_HIGH;		//高速
+		GPIO_Initure.Alternate=GPIO_AF7_USART2;	//复用为USART2
+		HAL_GPIO_Init(GPIOA,&GPIO_Initure);	   	//初始化PA2,3
+		
+		HAL_NVIC_EnableIRQ(USART2_IRQn);				//使能USART1中断通道
+		HAL_NVIC_SetPriority(USART2_IRQn,0,0);			//抢占优先级3，子优先级3
 	}
 
 }
@@ -143,67 +162,90 @@ void USART1_IRQHandler(void)
 #endif	
 
 
-/****************************************************************************************/
-/****************************************************************************************/
-/*************************下面程序通过在回调函数中编写中断控制逻辑*********************/
-/****************************************************************************************
-***************************************************************************************************
-void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
-{
-	if(huart->Instance==USART1)//如果是串口1
-	{
-		if((USART_RX_STA&0x8000)==0)//接收未完成
-		{
-			if(USART_RX_STA&0x4000)//接收到了0x0d
-			{
-				if(aRxBuffer[0]!=0x0a)USART_RX_STA=0;//接收错误,重新开始
-				else USART_RX_STA|=0x8000;	//接收完成了 
-			}
-			else //还没收到0X0D
-			{	
-				if(aRxBuffer[0]==0x0d)USART_RX_STA|=0x4000;
-				else
-				{
-					USART_RX_BUF[USART_RX_STA&0X3FFF]=aRxBuffer[0] ;
-					USART_RX_STA++;
-					if(USART_RX_STA>(USART_REC_LEN-1))USART_RX_STA=0;//接收数据错误,重新开始接收	  
-				}		 
-			}
-		}
 
-	}
+#if EN_USART2_RX   //如果使能了接收
+//串口2中断服务程序
+//注意,读取USARTx->SR能避免莫名其妙的错误   	
+u8 USART2_RX_BUF[USART2_REC_LEN];     //接收缓冲,最大USART_REC_LEN个字节.
+//接收状态
+//bit15，	接收完成标志
+//bit14，	接收到0x0d
+//bit13~0，	接收到的有效字节数目
+u16 USART2_RX_STA=0;       //接收状态标记	
+u8 end[3]={0xff,0xff,0xff};
+u8 aRxBuffer2[RXBUFFERSIZE2];//HAL库使用的串口接收缓冲
+
+void usart2_init(u32 bound)//默认9600，原装9600
+{
+    //USART 初始化设置
+	USART2_Handler.Instance=USART2;					    //USART2
+	USART2_Handler.Init.BaudRate=bound;				    //波特率
+	USART2_Handler.Init.WordLength=UART_WORDLENGTH_8B;	//字长为8位数据格式
+	USART2_Handler.Init.StopBits=UART_STOPBITS_1;		//一个停止位
+	USART2_Handler.Init.Parity=UART_PARITY_NONE;		//无奇偶校验位
+	USART2_Handler.Init.HwFlowCtl=UART_HWCONTROL_NONE;	//无硬件流控
+	USART2_Handler.Init.Mode=UART_MODE_TX_RX;			    //收发模式
+	HAL_UART_Init(&USART2_Handler);					    //HAL_UART_Init()会使能USART2
+  	HAL_UART_Receive_IT(&USART2_Handler, (u8 *)aRxBuffer2, RXBUFFERSIZE2);
+	HAL_UART_Transmit(&USART2_Handler, end, 3, 0xffff);
+	while(__HAL_UART_GET_FLAG(&UART1_Handler,UART_FLAG_TC)!=SET);		//等待发送结束
 }
- 
-//串口1中断服务程序
-void USART1_IRQHandler(void)                	
+void USART2_IRQHandler(void)                	
 { 
-	u32 timeout=0;
-    u32 maxDelay=0x1FFFF;
+	u8 Res;
 #if SYSTEM_SUPPORT_OS	 	//使用OS
 	OSIntEnter();    
 #endif
-	
-	HAL_UART_IRQHandler(&UART1_Handler);	//调用HAL库中断处理公用函数
-	
-	timeout=0;
-    while (HAL_UART_GetState(&UART1_Handler)!=HAL_UART_STATE_READY)//等待就绪
+	if((__HAL_UART_GET_FLAG(&USART2_Handler,UART_FLAG_RXNE)!=RESET))  //接收中断(接收到的数据必须是0x0d 0x0a结尾)
 	{
-        timeout++;////超时处理
-        if(timeout>maxDelay) break;		
+        HAL_UART_Receive(&USART2_Handler,&Res,1,1000); 
+		if((USART2_RX_STA&0x8000)==0)//接收未完成
+		{
+			if(USART2_RX_STA&0x4000)//接收到了0x0d
+			{
+				if(Res!=0x0a)USART2_RX_STA=0;//接收错误,重新开始
+				else USART2_RX_STA|=0x8000;	//接收完成了 
+			}
+			else //还没收到0X0D
+			{	
+				if(Res==0x0d)USART2_RX_STA|=0x4000;
+				else
+				{
+					USART2_RX_BUF[USART2_RX_STA&0X3FFF]=Res ;
+					USART2_RX_STA++;
+					if(USART2_RX_STA>(USART2_REC_LEN-1))USART2_RX_STA=0;//接收数据错误,重新开始接收	  
+				}		 
+			}
+		}   		 
 	}
-     
-	timeout=0;
-	while(HAL_UART_Receive_IT(&UART1_Handler,(u8 *)aRxBuffer, RXBUFFERSIZE)!=HAL_OK)//一次处理完成之后，重新开启中断并设置RxXferCount为1
-	{
-        timeout++; //超时处理
-        if(timeout>maxDelay) break;	
-	}
+	HAL_UART_IRQHandler(&USART2_Handler);	
 #if SYSTEM_SUPPORT_OS	 	//使用OS
 	OSIntExit();  											 
 #endif
 } 
-#endif	
-*/
+void u2_print(u8 *a)
+{
+	u8 i=0;
+	while(a[i]!=0)
+	{		
+		HAL_UART_Transmit(&USART2_Handler,&a[i],1,1000);
+		while(__HAL_UART_GET_FLAG(&UART1_Handler,UART_FLAG_TC)!=SET);		//等待发送结束
+		i++;
+	}
+
+	HAL_UART_Transmit(&USART2_Handler, end, 3, 1000);
+	while(__HAL_UART_GET_FLAG(&UART1_Handler,UART_FLAG_TC)!=SET);		//等待发送结束
+}
+void text_print(u8 *name,u8* b)
+{
+	u8 out[40];
+	sprintf((char *)out,"t%d.txt=\"%c\"",name,b);
+	u2_print(out);
+}
+
+
+
+#endif
 
 
 
