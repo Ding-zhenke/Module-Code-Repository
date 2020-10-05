@@ -1,0 +1,39 @@
+*** Creating Trace Output File '.\Obj\ADS1292.tra' Ok.
+### Preparing for ADS-LD.
+### Creating ADS-LD Command Line
+### List of Objects: adding '".\obj\main.o"'
+### List of Objects: adding '".\obj\stm32f10x_it.o"'
+### List of Objects: adding '".\obj\led.o"'
+### List of Objects: adding '".\obj\peripheralinit.o"'
+### List of Objects: adding '".\obj\delay.o"'
+### List of Objects: adding '".\obj\lze_lcd.o"'
+### List of Objects: adding '".\obj\usart.o"'
+### List of Objects: adding '".\obj\spi.o"'
+### List of Objects: adding '".\obj\ads1292.o"'
+### List of Objects: adding '".\obj\misc.o"'
+### List of Objects: adding '".\obj\stm32f10x_rcc.o"'
+### List of Objects: adding '".\obj\stm32f10x_gpio.o"'
+### List of Objects: adding '".\obj\stm32f10x_exti.o"'
+### List of Objects: adding '".\obj\stm32f10x_tim.o"'
+### List of Objects: adding '".\obj\stm32f10x_fsmc.o"'
+### List of Objects: adding '".\obj\stm32f10x_usart.o"'
+### List of Objects: adding '".\obj\stm32f10x_spi.o"'
+### List of Objects: adding '".\obj\core_cm3.o"'
+### List of Objects: adding '".\obj\system_stm32f10x.o"'
+### List of Objects: adding '".\obj\startup_stm32f10x_hd.o"'
+### ADS-LD Command completed:
+--cpu Cortex-M3 ".\obj\main.o" ".\obj\stm32f10x_it.o" ".\obj\led.o" ".\obj\peripheralinit.o" ".\obj\delay.o" ".\obj\lze_lcd.o" ".\obj\usart.o" ".\obj\spi.o" ".\obj\ads1292.o" ".\obj\misc.o" ".\obj\stm32f10x_rcc.o" ".\obj\stm32f10x_gpio.o" ".\obj\stm32f10x_exti.o" ".\obj\stm32f10x_tim.o" ".\obj\stm32f10x_fsmc.o" ".\obj\stm32f10x_usart.o" ".\obj\stm32f10x_spi.o" ".\obj\core_cm3.o" ".\obj\system_stm32f10x.o" ".\obj\startup_stm32f10x_hd.o" 
+--strict --scatter ".\Obj\ADS1292.sct" 
+--summary_stderr --info summarysizes --map --xref --callgraph --symbols 
+--info sizes --info totals --info unused --info veneers 
+ --list ".\List\ADS1292.map" -o .\Obj\ADS1292.axf### Preparing Environment (PrepEnvAds)
+### ADS-LD Output File: '.\Obj\ADS1292.axf'
+### ADS-LD Command File: '.\Obj\ADS1292.lnp'
+### Checking for dirty Components...
+### Creating CmdFile '.\Obj\ADS1292.lnp', Handle=0x00000774
+### Writing '.lnp' file
+### ADS-LD Command file '.\Obj\ADS1292.lnp' is ready.
+### ADS-LD: About to start ADS-LD Thread.
+### ADS-LD: executed with 0 errors
+### Updating obj list
+### LDADS_file() completed.
