@@ -28,7 +28,7 @@
     <TargetOption>
       <CLKADS>12000000</CLKADS>
       <OPTTT>
-        <gFlags>1</gFlags>
+        <gFlags>0</gFlags>
         <BeepAtEnd>1</BeepAtEnd>
         <RunSim>0</RunSim>
         <RunTarget>1</RunTarget>
@@ -77,7 +77,7 @@
         <tvExpOptDlg>0</tvExpOptDlg>
         <IsCurrentTarget>1</IsCurrentTarget>
       </OPTFL>
-      <CpuCode>18</CpuCode>
+      <CpuCode>0</CpuCode>
       <DebugOpt>
         <uSim>0</uSim>
         <uTrg>1</uTrg>
@@ -101,7 +101,9 @@
         <sRunDeb>0</sRunDeb>
         <sLrtime>0</sLrtime>
         <bEvRecOn>1</bEvRecOn>
-        <nTsel>5</nTsel>
+        <bSchkAxf>0</bSchkAxf>
+        <bTchkAxf>0</bTchkAxf>
+        <nTsel>0</nTsel>
         <sDll></sDll>
         <sDllPa></sDllPa>
         <sDlgDll></sDlgDll>
@@ -112,18 +114,13 @@
         <tDlgDll></tDlgDll>
         <tDlgPa></tDlgPa>
         <tIfile></tIfile>
-        <pMon>STLink\ST-LINKIII-KEIL_SWO.dll</pMon>
+        <pMon>BIN\UL2CM3.DLL</pMon>
       </DebugOpt>
       <TargetDriverDllRegistry>
         <SetRegEntry>
           <Number>0</Number>
           <Key>UL2CM3</Key>
-          <Name>UL2CM3(-S0 -C0 -P0 ) -FN1 -FC8000 -FD20000000 -FF0STM32H7x_2048 -FL0200000 -FS08000000 -FP0($$Device:STM32H743VITx$CMSIS\Flash\STM32H7x_2048.FLM)</Name>
-        </SetRegEntry>
-        <SetRegEntry>
-          <Number>0</Number>
-          <Key>ST-LINKIII-KEIL_SWO</Key>
-          <Name>-U19250C000A14304D434D4E00 -O206 -SF10000 -C0 -A0 -I0 -HNlocalhost -HP7184 -P1 -N00("ARM CoreSight SW-DP (ARM Core") -D00(6BA02477) -L00(0) -TO131090 -TC10000000 -TT10000000 -TP21 -TDS8000 -TDT0 -TDC1F -TIEFFFFFFFF -TIP8 -FO15 -FD20000000 -FC8000 -FN1 -FF0STM32H7x_2048.FLM -FS08000000 -FL0200000 -FP0($$Device:STM32H743VITx$CMSIS\Flash\STM32H7x_2048.FLM)</Name>
+          <Name>UL2CM3(-S0 -C0 -P0 -FD20000000 -FC8000 -FN1 -FF0STM32H7x_2048 -FS08000000 -FL0200000 -FP0($$Device:STM32H743VITx$CMSIS\Flash\STM32H7x_2048.FLM))</Name>
         </SetRegEntry>
       </TargetDriverDllRegistry>
       <Breakpoint/>
@@ -165,8 +162,13 @@
       <pszMrule></pszMrule>
       <pSingCmds></pSingCmds>
       <pMultCmds></pMultCmds>
+      <pMisraNamep></pMisraNamep>
+      <pszMrulep></pszMrulep>
+      <pSingCmdsp></pSingCmdsp>
+      <pMultCmdsp></pMultCmdsp>
       <DebugDescription>
         <Enable>1</Enable>
+        <EnableFlashSeq>1</EnableFlashSeq>
         <EnableLog>0</EnableLog>
         <Protocol>2</Protocol>
         <DbgClock>10000000</DbgClock>
@@ -288,7 +290,7 @@
 
   <Group>
     <GroupName>SYSTEM</GroupName>
-    <tvExp>1</tvExp>
+    <tvExp>0</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
@@ -296,7 +298,7 @@
       <GroupNumber>3</GroupNumber>
       <FileNumber>9</FileNumber>
       <FileType>1</FileType>
-      <tvExp>1</tvExp>
+      <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
       <PathWithFileName>..\SYSTEM\delay\delay.c</PathWithFileName>
@@ -688,7 +690,7 @@
 
   <Group>
     <GroupName>HARDWARE</GroupName>
-    <tvExp>1</tvExp>
+    <tvExp>0</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
@@ -755,7 +757,6 @@
     <File>
       <GroupNumber>5</GroupNumber>
       <FileNumber>46</FileNumber>
-<<<<<<< HEAD:电设工程文件库/摩斯电码发射机/USER/DSP.uvoptx
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -780,41 +781,22 @@
     <File>
       <GroupNumber>5</GroupNumber>
       <FileNumber>48</FileNumber>
-=======
->>>>>>> a42994a0c05022f8f4e83a98fe157da3bc53d2ec:H7_DSP/USER/DSP.uvoptx
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\HARDWARE\QSPI\qspi.c</PathWithFileName>
-      <FilenameWithoutPath>qspi.c</FilenameWithoutPath>
+      <PathWithFileName>..\HARDWARE\TIMER\timer.c</PathWithFileName>
+      <FilenameWithoutPath>timer.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
     <File>
       <GroupNumber>5</GroupNumber>
-<<<<<<< HEAD:电设工程文件库/摩斯电码发射机/USER/DSP.uvoptx
       <FileNumber>49</FileNumber>
-=======
-      <FileNumber>47</FileNumber>
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>..\HARDWARE\W25QXX\w25qxx.c</PathWithFileName>
-      <FilenameWithoutPath>w25qxx.c</FilenameWithoutPath>
-      <RteFlg>0</RteFlg>
-      <bShared>0</bShared>
-    </File>
-    <File>
-      <GroupNumber>5</GroupNumber>
-      <FileNumber>48</FileNumber>
->>>>>>> a42994a0c05022f8f4e83a98fe157da3bc53d2ec:H7_DSP/USER/DSP.uvoptx
-      <FileType>1</FileType>
-      <tvExp>0</tvExp>
-      <tvExpOptDlg>0</tvExpOptDlg>
-      <bDave2>0</bDave2>
-<<<<<<< HEAD:电设工程文件库/摩斯电码发射机/USER/DSP.uvoptx
       <PathWithFileName>..\HARDWARE\AD9851\AD9851.c</PathWithFileName>
       <FilenameWithoutPath>AD9851.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
@@ -829,10 +811,6 @@
       <bDave2>0</bDave2>
       <PathWithFileName>..\HARDWARE\RF_SWITCH\RF_SWITCH.c</PathWithFileName>
       <FilenameWithoutPath>RF_SWITCH.c</FilenameWithoutPath>
-=======
-      <PathWithFileName>..\HARDWARE\TIMER\timer.c</PathWithFileName>
-      <FilenameWithoutPath>timer.c</FilenameWithoutPath>
->>>>>>> a42994a0c05022f8f4e83a98fe157da3bc53d2ec:H7_DSP/USER/DSP.uvoptx
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -840,17 +818,13 @@
 
   <Group>
     <GroupName>USMART</GroupName>
-    <tvExp>1</tvExp>
+    <tvExp>0</tvExp>
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
     <File>
       <GroupNumber>6</GroupNumber>
-<<<<<<< HEAD:电设工程文件库/摩斯电码发射机/USER/DSP.uvoptx
       <FileNumber>51</FileNumber>
-=======
-      <FileNumber>49</FileNumber>
->>>>>>> a42994a0c05022f8f4e83a98fe157da3bc53d2ec:H7_DSP/USER/DSP.uvoptx
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -862,11 +836,7 @@
     </File>
     <File>
       <GroupNumber>6</GroupNumber>
-<<<<<<< HEAD:电设工程文件库/摩斯电码发射机/USER/DSP.uvoptx
       <FileNumber>52</FileNumber>
-=======
-      <FileNumber>50</FileNumber>
->>>>>>> a42994a0c05022f8f4e83a98fe157da3bc53d2ec:H7_DSP/USER/DSP.uvoptx
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -878,11 +848,7 @@
     </File>
     <File>
       <GroupNumber>6</GroupNumber>
-<<<<<<< HEAD:电设工程文件库/摩斯电码发射机/USER/DSP.uvoptx
       <FileNumber>53</FileNumber>
-=======
-      <FileNumber>51</FileNumber>
->>>>>>> a42994a0c05022f8f4e83a98fe157da3bc53d2ec:H7_DSP/USER/DSP.uvoptx
       <FileType>1</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -896,21 +862,13 @@
 
   <Group>
     <GroupName>DSPLIB</GroupName>
-<<<<<<< HEAD:电设工程文件库/摩斯电码发射机/USER/DSP.uvoptx
-    <tvExp>1</tvExp>
-=======
     <tvExp>0</tvExp>
->>>>>>> a42994a0c05022f8f4e83a98fe157da3bc53d2ec:H7_DSP/USER/DSP.uvoptx
     <tvExpOptDlg>0</tvExpOptDlg>
     <cbSel>0</cbSel>
     <RteFlg>0</RteFlg>
     <File>
       <GroupNumber>7</GroupNumber>
-<<<<<<< HEAD:电设工程文件库/摩斯电码发射机/USER/DSP.uvoptx
       <FileNumber>54</FileNumber>
-=======
-      <FileNumber>52</FileNumber>
->>>>>>> a42994a0c05022f8f4e83a98fe157da3bc53d2ec:H7_DSP/USER/DSP.uvoptx
       <FileType>4</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
@@ -930,11 +888,7 @@
     <RteFlg>0</RteFlg>
     <File>
       <GroupNumber>8</GroupNumber>
-<<<<<<< HEAD:电设工程文件库/摩斯电码发射机/USER/DSP.uvoptx
       <FileNumber>55</FileNumber>
-=======
-      <FileNumber>53</FileNumber>
->>>>>>> a42994a0c05022f8f4e83a98fe157da3bc53d2ec:H7_DSP/USER/DSP.uvoptx
       <FileType>5</FileType>
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
